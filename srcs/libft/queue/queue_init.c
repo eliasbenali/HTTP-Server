@@ -1,5 +1,6 @@
 #include "queue.h"
 
+__attribute__((malloc))
 t_queue			*queue_init(void)
 {
 	t_queue		*queue;

@@ -5,6 +5,7 @@
 ** Itoa function used on a long unsigned int
 */
 
+__attribute__((malloc))
 static char				*ft_itoa(long unsigned int nb)
 {
 	long unsigned int	tmp;
@@ -44,7 +45,7 @@ static int				ft_write(int fd, size_t nfields, ...)
 	{
 		const char *str = va_arg(ap, const char *);
 		if (write(fd, str, strlen(str)) == -1) {
-			perror("ft_write: write() error");
+			PLOGE("%s: write()", __func__);
 			return (0);
 		}
 	}

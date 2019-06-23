@@ -20,6 +20,7 @@
 ** Returns an allocated char *
 */
 
+__attribute__((malloc))
 char				*get_date(void)
 {
 	char			date[32];

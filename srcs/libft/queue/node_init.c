@@ -1,5 +1,6 @@
 #include "queue.h"
 
+__attribute__((malloc))
 t_node			*node_init(void *elem)
 {
 	t_node		*node;

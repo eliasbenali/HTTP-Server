@@ -15,6 +15,7 @@
 # include <sys/socket.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
+# include <pthread.h>
 
 # include "queue.h"
 
@@ -44,7 +45,7 @@ typedef struct		s_http
 
 	size_t			content_length;
 	t_queue			*content;
-}					t_http;
+}			t_http;
 
 typedef struct		s_content
 {
@@ -59,8 +60,10 @@ int				socket_accept(int fd, char **address);
 
 int				request(int fd, t_http **data, int *status);
 
+/*
+** signal.c
+*/
 void				exit_server(void);
-void				sigstop(int sig);
-void				sigchld(int sig);
+void				sighandler_init(void);
 
 #endif

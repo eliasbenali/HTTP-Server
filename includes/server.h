@@ -6,6 +6,7 @@
 # include "request.h"
 # include "response.h"
 # include "api.h"
+# include "logtee.h"
 
 /*
 **  Defined in server.c

@@ -13,18 +13,18 @@ int			socket_int(void)
 
 	if ((proto = getprotobyname("TCP")) == 0)
 	{
-		perror("ERROR: Protocol");
-		// return (-1);
+		PLOGE("%s: protocol", __func__);
+		// return (-1); // Accomodate Android's boinic libc (stub function)
 	}
 	if ((fd = socket(PF_INET, SOCK_STREAM, proto ? proto->p_proto : 0)) == -1)
 	{
-		perror("ERROR: Socket");
+		PLOGE("%s: socket", __func__);
 		return (-1);
 	}
 	num = 1;
 	if (setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &num, sizeof(int)) == -1)
 	{
-		perror("ERROR: Setsockopt(SO_REUSEADDR)");
+		PLOGE("%s: setsockopt(SO_REUSEADDR)", __func__);
 		return (-1);
 	}
 	return (fd);
@@ -45,7 +45,7 @@ int			socket_bind(int fd, int port, char **address)
 	bind_s.sin_addr.s_addr = htonl(INADDR_ANY);
 	if (bind(fd, (struct sockaddr *)&bind_s, sizeof(bind_s)) == -1)
 	{
-		perror("ERROR: Bind");
+		PLOGE("%s: bind", __func__);
 		return (0);
 	}
 	*address = strdup(inet_ntoa(bind_s.sin_addr));
@@ -67,7 +67,7 @@ static int	socket_timeout(int fd)
 	delay.tv_sec = TIME_OUT;
 	if (setsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, (char *)&delay, size) == -1)
 	{
-		perror("ERROR: Setsockopt(SO_RCVTIMEO)");
+		PLOGE("%s: setsockopt(SO_RCVTIMEO)", __func__);
 		return (0);
 	}
 	return (1);
@@ -84,14 +84,14 @@ static int	socket_sigpipe(int fd)
 #if !defined(SO_NOSIGPIPE)
 	(void)fd;
 	if (signal(SIGPIPE, SIG_IGN) == SIG_ERR) {
-		perror("ERROR: signal(SIGPIPE, SIG_IGN)");
+		PLOGE("%s: signal(SIGPIPE, SIG_IGN)", __func__);
 		return 0;
 	}
 #else
 	int pipe = 1;
 	if (setsockopt(fd, SOL_SOCKET, SO_NOSIGPIPE, &pipe, sizeof(int)) == -1)
 	{
-		perror("ERROR: Setsockopt(SO_NOSIGPIPE)");
+		PLOGE("%s: setsockopt(SO_NOSIGPIPE)", __func__);
 		return (0);
 	}
 #endif /* !defined(SO_NOSIGPIPE) */
@@ -113,7 +113,7 @@ int			socket_accept(int fd, char **address)
 	memset(&sock_init, 0, sizeof(struct sockaddr_in));
 	if ((sock = accept(fd, (struct sockaddr *)&sock_init, &sock_len)) == -1)
 	{
-		perror("ERROR: Accept");
+		PLOGE("%s: accept", __func__);
 		return (-1);
 	}
 	if (socket_timeout(sock) == 0)

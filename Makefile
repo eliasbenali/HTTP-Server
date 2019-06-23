@@ -1,7 +1,8 @@
-CC				= gcc
-RM				= rm -f
+CC			= gcc
+RM			= rm -f
 SERVER			= server
 CFLAGS			= -Wall -Wextra -Werror -g
+LDLIBS			= -pthread
 INCLUDES		= -I includes
 
 BASE			= server.c socket.c receive.c signal.c
@@ -16,10 +17,10 @@ RESPONSE		= response.c protocol.c content_type.c ft_free.c\
 QUEUE			= queue_init.c node_init.c dequeue.c enqueue.c\
 					is_empty.c peek.c
 LIBFT			= strdel.c concat.c get_file_content.c $(addprefix queue/, $(QUEUE))
-API				= demo.c
+API			= demo.c
 
 REQUEST_FCT		= $(addprefix request/, $(REQUEST) $(FIELDS))
-RESPONSE_FCT	= $(addprefix response/, $(RESPONSE))
+RESPONSE_FCT		= $(addprefix response/, $(RESPONSE))
 LIBFT_FCT		= $(addprefix libft/, $(LIBFT))
 API_FCT			= $(addprefix api/, $(API))
 FUNCTIONS		= $(addprefix srcs/, $(BASE) $(REQUEST_FCT) $(RESPONSE_FCT)\
@@ -34,7 +35,7 @@ all: $(SERVER)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(SERVER): $(OBJECTS)
-	@$(CC) $(CFLAGS) $(INCLUDES) -o $(SERVER) $(OBJECTS)
+	@$(CC) $(CFLAGS) $(INCLUDES) -o $(SERVER) $(OBJECTS) $(LDLIBS)
 
 clean:
 	@$(RM) $(OBJECTS)

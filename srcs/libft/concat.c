@@ -1,6 +1,7 @@
 #include "http.h"
 #include "libft.h"
 
+__attribute__((malloc))
 char		*concat(const char *s1, const char *s2)
 {
 	char			*result;
@@ -18,6 +19,7 @@ char		*concat(const char *s1, const char *s2)
 	return (result);
 }
 
+__attribute__((malloc))
 uint8_t		*concat_uint8_t(const uint8_t *s1, const uint8_t *s2)
 {
 	uint8_t			*result;
