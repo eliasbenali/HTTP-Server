@@ -36,6 +36,9 @@ static void		sigchld(int sig)
 		if (!WIFEXITED(status) || WEXITSTATUS(status) != 0)
 			LOGW("%s: abnormal termination of child PID %ju\n",
 					__func__, (uintmax_t)pid);
+		else
+			LOGD("%s: child PID=%u terminated with status=%i\n",
+					__func__, pid, WEXITSTATUS(status));
 }
 
 
